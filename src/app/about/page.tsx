@@ -1,93 +1,125 @@
-import Link from "next/link";
-import { PageShell } from "@/components/shared/page-shell";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { mockTeamMembers } from "@/data/mock-data";
-import { SITE_CONFIG } from "@/lib/site-config";
+import Link from 'next/link'
+import { Compass, Mountain, Shield, Sparkles } from 'lucide-react'
+import { PageShell } from '@/components/shared/page-shell'
+import { Button } from '@/components/ui/button'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { AdventurePanel, AdventureSectionTitle, AdventureSoftPanel } from '@/components/marketing/adventure-marketing'
+import { mockTeamMembers } from '@/data/mock-data'
+import { SITE_CONFIG } from '@/lib/site-config'
 
-const highlights = [
-  { label: "Creators onboarded", value: "12k+" },
-  { label: "Bookmarks shared", value: "180k" },
-  { label: "Listings published", value: "8.6k" },
-];
+const pillars = [
+  {
+    title: 'Field-first reporting',
+    body: 'Our editors prioritize on-the-ground verification, clear safety context, and respect for the landscapes and communities we cover.',
+    icon: Mountain,
+  },
+  {
+    title: 'Slow journalism, fast scanning',
+    body: 'Long reads get room to breathe—while navigation, search, and section rails stay crisp so you can find the right story quickly.',
+    icon: Compass,
+  },
+  {
+    title: 'Trust by design',
+    body: 'Corrections, bylines, and transparent sourcing matter as much as typography. We build those signals into every template.',
+    icon: Shield,
+  },
+]
 
-const values = [
-  { title: "Curated by people", description: "We believe trusted recommendations beat endless feeds." },
-  { title: "Designed for focus", description: "Clear, calm UI helps you find the next best resource fast." },
-  { title: "Built to share", description: "Collections make collaboration and knowledge flow effortless." },
-];
+const stats = [
+  { value: '40+', label: 'countries covered in the archive' },
+  { value: '120+', label: 'field contributors & photographers' },
+  { value: '18', label: 'months average editorial lead time' },
+]
 
 export default function AboutPage() {
   return (
     <PageShell
+      variant="adventure"
       title={`About ${SITE_CONFIG.name}`}
-      description={`${SITE_CONFIG.name} is a modern platform for creators, communities, and curated business discovery.`}
+      description="We publish independent adventure journalism—trail ethics, climate on the move, gear that survives real mileage, and human stories from the edge of the map."
       actions={
         <>
-          <Button variant="outline" asChild>
-            <Link href="/team">Meet the Team</Link>
+          <Button variant="outline" className="rounded-full border-[#1A4D4E]/35 bg-white" asChild>
+            <Link href="/team">Meet the desk</Link>
           </Button>
-          <Button asChild>
-            <Link href="/contact">Contact Us</Link>
+          <Button className="rounded-full bg-[#1A4D4E] text-white hover:bg-[#143d3e]" asChild>
+            <Link href="/contact">Talk to editors</Link>
           </Button>
         </>
       }
     >
-      <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-        <Card className="border-border bg-card">
-          <CardContent className="space-y-4 p-6">
-            <Badge variant="secondary">Our Story</Badge>
-            <h2 className="text-2xl font-semibold text-foreground">
-              A single home for knowledge, discovery, and community.
-            </h2>
-            <p className="text-sm text-muted-foreground">
-              {SITE_CONFIG.name} brings together publishing, listings, and social bookmarking so teams can move faster
-              and keep their best resources close.
-            </p>
-            <div className="grid gap-4 sm:grid-cols-3">
-              {highlights.map((item) => (
-                <div key={item.label} className="rounded-lg border border-border bg-secondary/40 p-4">
-                  <div className="text-2xl font-semibold text-foreground">{item.value}</div>
-                  <div className="text-xs text-muted-foreground">{item.label}</div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-        <div className="space-y-4">
-          {values.map((value) => (
-            <Card key={value.title} className="border-border bg-card">
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold text-foreground">{value.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{value.description}</p>
-              </CardContent>
-            </Card>
+      <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
+        <AdventurePanel>
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#c5d9d9]/80 bg-[#eef5f5] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#1A4D4E]">
+            <Sparkles className="h-3.5 w-3.5" aria-hidden />
+            Our mandate
+          </div>
+          <h2 className="mt-5 text-2xl font-semibold tracking-tight text-[#0f1a1a] sm:text-3xl">Stories for readers who actually go outside.</h2>
+          <p className="mt-4 text-sm leading-relaxed text-[#4a6566] sm:text-base">
+            {SITE_CONFIG.name} started as a reaction to noisy feeds and thin outdoor listicles. Today we pair rigorous editing with immersive
+            art direction—so a river descent, a climate dispatch, or a gear lab review all feel like part of one publication, not scattered posts.
+          </p>
+          <p className="mt-4 text-sm leading-relaxed text-[#4a6566] sm:text-base">
+            We fund field reporting through memberships and partnerships that never dictate coverage. Editorial independence is non-negotiable—and
+            we publish corrections with the same prominence as the original piece.
+          </p>
+          <div className="mt-8 grid gap-4 sm:grid-cols-3">
+            {stats.map((s) => (
+              <div key={s.label} className="rounded-xl border border-[#c5d9d9]/50 bg-[#f6f9f9] px-4 py-4">
+                <p className="text-2xl font-semibold text-[#1A4D4E]">{s.value}</p>
+                <p className="mt-1 text-xs font-medium uppercase tracking-wide text-[#5a7a7b]">{s.label}</p>
+              </div>
+            ))}
+          </div>
+        </AdventurePanel>
+
+        <div className="space-y-5">
+          {pillars.map((p) => (
+            <AdventureSoftPanel key={p.title}>
+              <p.icon className="h-5 w-5 text-[#1A4D4E]" aria-hidden />
+              <h3 className="mt-3 text-lg font-semibold text-[#0f1a1a]">{p.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-[#4a6566]">{p.body}</p>
+            </AdventureSoftPanel>
           ))}
         </div>
       </div>
 
-      <div className="mt-10 grid gap-6 md:grid-cols-3">
-        {mockTeamMembers.map((member) => (
-          <Card key={member.id} className="border-border bg-card transition-transform hover:-translate-y-1">
-            <CardContent className="p-6">
-              <div className="flex items-center gap-3">
-                <Avatar className="h-12 w-12">
+      <div className="mt-16">
+        <AdventureSectionTitle kicker="Masthead" title="Editors & producers shaping each issue" />
+        <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {mockTeamMembers.map((member) => (
+            <AdventurePanel key={member.id} className="transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_55px_rgba(15,42,44,0.1)]">
+              <div className="flex items-start gap-4">
+                <Avatar className="h-14 w-14 border border-[#c5d9d9]/80">
                   <AvatarImage src={member.avatar} alt={member.name} />
-                  <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
+                  <AvatarFallback className="bg-[#1A4D4E] text-white">{member.name.charAt(0)}</AvatarFallback>
                 </Avatar>
                 <div>
-                  <p className="text-sm font-semibold text-foreground">{member.name}</p>
-                  <p className="text-xs text-muted-foreground">{member.role}</p>
+                  <p className="font-semibold text-[#0f1a1a]">{member.name}</p>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-[#1A4D4E]">{member.role}</p>
+                  <p className="mt-3 text-sm leading-relaxed text-[#4a6566]">{member.bio}</p>
+                  <p className="mt-2 text-xs text-[#5a7a7b]">{member.location}</p>
                 </div>
               </div>
-              <p className="mt-3 text-sm text-muted-foreground">{member.bio}</p>
-              <p className="mt-3 text-xs text-muted-foreground">{member.location}</p>
-            </CardContent>
-          </Card>
-        ))}
+            </AdventurePanel>
+          ))}
+        </div>
       </div>
+
+      <AdventureSoftPanel className="mt-16 text-center">
+        <p className="text-sm font-semibold uppercase tracking-[0.22em] text-[#5a7a7b]">Work with us</p>
+        <p className="mx-auto mt-3 max-w-2xl text-base leading-relaxed text-[#4a6566]">
+          Pitch a route, investigation, or photo essay. We read every submission and respond with clear next steps—even when the timing is not a fit.
+        </p>
+        <div className="mt-6 flex flex-wrap justify-center gap-3">
+          <Button className="rounded-full bg-[#1A4D4E] text-white hover:bg-[#143d3e]" asChild>
+            <Link href="/register">Open contributor account</Link>
+          </Button>
+          <Button variant="outline" className="rounded-full border-[#1A4D4E]/35" asChild>
+            <Link href="/careers">See open roles</Link>
+          </Button>
+        </div>
+      </AdventureSoftPanel>
     </PageShell>
-  );
+  )
 }

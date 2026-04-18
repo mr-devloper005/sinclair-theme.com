@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { ArrowRight, Building2, FileText, Image as ImageIcon, LayoutGrid, Tag, User } from 'lucide-react'
 import { NavbarShell } from '@/components/shared/navbar-shell'
 import { Footer } from '@/components/shared/footer'
+import { ArticleCreateMenu } from '@/components/tasks/article-create-menu'
 import { TaskListClient } from '@/components/tasks/task-list-client'
 import { SchemaJsonLd } from '@/components/seo/schema-jsonld'
 import { fetchTaskPosts } from '@/lib/task-data'
@@ -28,7 +29,7 @@ const variantShells = {
   'listing-directory': 'bg-[radial-gradient(circle_at_top_left,rgba(56,189,248,0.08),transparent_24%),linear-gradient(180deg,#f8fbff_0%,#ffffff_100%)]',
   'listing-showcase': 'bg-[linear-gradient(180deg,#ffffff_0%,#f4f9ff_100%)]',
   'article-editorial': 'bg-[radial-gradient(circle_at_top_left,rgba(251,191,36,0.08),transparent_20%),linear-gradient(180deg,#fff8ef_0%,#ffffff_100%)]',
-  'article-journal': 'bg-[linear-gradient(180deg,#fffdf9_0%,#f7f1ea_100%)]',
+  'article-journal': 'bg-[linear-gradient(180deg,#fbfdfe_0%,#eef5f5_100%)]',
   'image-masonry': 'bg-[linear-gradient(180deg,#09101d_0%,#111c2f_100%)] text-white',
   'image-portfolio': 'bg-[linear-gradient(180deg,#07111f_0%,#13203a_100%)] text-white',
   'profile-creator': 'bg-[linear-gradient(180deg,#0a1120_0%,#101c34_100%)] text-white',
@@ -71,11 +72,11 @@ export async function TaskListPage({ task, category }: { task: TaskKey; category
       }
     : layoutKey.startsWith('article') || layoutKey.startsWith('sbm')
       ? {
-          muted: 'text-[#72594a]',
-          panel: 'border border-[#dbc6b6] bg-white/90',
-          soft: 'border border-[#dbc6b6] bg-[#fff8ef]',
-          input: 'border border-[#dbc6b6] bg-white text-[#2f1d16]',
-          button: 'bg-[#2f1d16] text-[#fff4e4] hover:bg-[#452920]',
+          muted: 'text-[#4a6566]',
+          panel: 'border border-[#c5d9d9]/80 bg-white/95',
+          soft: 'border border-[#c5d9d9]/70 bg-[#eef5f5]',
+          input: 'border border-[#c5d9d9] bg-white text-[#0f1a1a]',
+          button: 'bg-[#1A4D4E] text-white hover:bg-[#143d3e]',
         }
       : {
           muted: 'text-slate-600',
@@ -147,23 +148,57 @@ export async function TaskListPage({ task, category }: { task: TaskKey; category
         ) : null}
 
         {layoutKey === 'article-editorial' || layoutKey === 'article-journal' ? (
-          <section className="mb-12 grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
-            <div>
-              <p className={`text-xs uppercase tracking-[0.3em] ${ui.muted}`}>{taskConfig?.label || task}</p>
-              <h1 className="mt-3 max-w-4xl text-5xl font-semibold tracking-[-0.05em] text-foreground">{taskConfig?.description || 'Latest posts'}</h1>
-              <p className={`mt-5 max-w-2xl text-sm leading-8 ${ui.muted}`}>This reading surface uses slower pacing, stronger typographic hierarchy, and more breathing room so long-form content feels intentional rather than squeezed into a generic feed.</p>
+          <section className="mb-14 grid gap-10 lg:grid-cols-[1.12fr_0.88fr] lg:items-stretch">
+            <div className="relative overflow-hidden rounded-2xl border border-[#c5d9d9]/70 bg-[linear-gradient(135deg,#ffffff_0%,#eef5f5_55%,#e2f0f0_100%)] p-8 sm:p-10 lg:p-12">
+              <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-[rgba(26,77,78,0.07)]" aria-hidden />
+              <p className={`text-xs font-semibold uppercase tracking-[0.28em] ${ui.muted}`}>{taskConfig?.label || task}</p>
+              <h1 className="relative mt-4 max-w-3xl text-4xl font-semibold tracking-[-0.045em] text-[#0f1a1a] sm:text-5xl lg:text-[3.15rem] lg:leading-[1.08]">
+                {taskConfig?.description || 'Latest posts'}
+              </h1>
+              <p className={`relative mt-6 max-w-2xl text-base leading-relaxed ${ui.muted}`}>
+                Dispatches, investigations, and trail notebooks—edited for depth, designed for calm reading, and organized so you can scan by corridor without losing the
+                magazine pacing.
+              </p>
+              <div className="relative mt-8 flex flex-wrap items-center gap-3">
+                <Link href="/search" className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold ${ui.button}`}>
+                  Open search
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link href="/" className={`inline-flex items-center gap-2 rounded-full border border-[#1A4D4E]/25 bg-white/90 px-5 py-2.5 text-sm font-semibold text-[#0f1a1a] hover:bg-[#eef5f5]`}>
+                  Today&apos;s lead
+                </Link>
+                {task === 'article' ? <ArticleCreateMenu /> : null}
+              </div>
             </div>
-            <div className={`rounded-[2rem] p-6 ${ui.panel}`}>
-              <p className={`text-xs font-semibold uppercase tracking-[0.24em] ${ui.muted}`}>Reading note</p>
-              <p className={`mt-4 text-sm leading-7 ${ui.muted}`}>Use category filters to jump between topics without collapsing the page into the same repeated card rhythm used by other task types.</p>
-              <form className="mt-5 flex items-center gap-3" action={taskConfig?.route || '#'}>
-                <select name="category" defaultValue={normalizedCategory} className={`h-11 flex-1 rounded-xl px-3 text-sm ${ui.input}`}>
-                  <option value="all">All categories</option>
-                  {CATEGORY_OPTIONS.map((item) => (
-                    <option key={item.slug} value={item.slug}>{item.name}</option>
-                  ))}
-                </select>
-                <button type="submit" className={`h-11 rounded-xl px-4 text-sm font-medium ${ui.button}`}>Apply</button>
+            <div className={`flex flex-col justify-between rounded-2xl p-7 sm:p-8 ${ui.panel}`}>
+              <div>
+                <p className={`text-xs font-semibold uppercase tracking-[0.24em] ${ui.muted}`}>Browse the archive</p>
+                <p className={`mt-4 text-sm leading-relaxed ${ui.muted}`}>
+                  Pick a category to narrow the grid. Filters use the same query string pattern as the rest of the site—bookmark your favorite lens.
+                </p>
+              </div>
+              <form className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-end" action={taskConfig?.route || '#'}>
+                <div className="min-w-0 flex-1">
+                  <label htmlFor="article-category" className={`text-xs font-semibold uppercase tracking-[0.18em] ${ui.muted}`}>
+                    Category
+                  </label>
+                  <select
+                    id="article-category"
+                    name="category"
+                    defaultValue={normalizedCategory}
+                    className={`mt-2 h-11 w-full rounded-xl px-3 text-sm ${ui.input}`}
+                  >
+                    <option value="all">All categories</option>
+                    {CATEGORY_OPTIONS.map((item) => (
+                      <option key={item.slug} value={item.slug}>
+                        {item.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <button type="submit" className={`h-11 shrink-0 rounded-full px-6 text-sm font-semibold sm:mb-0 ${ui.button}`}>
+                  Apply
+                </button>
               </form>
             </div>
           </section>

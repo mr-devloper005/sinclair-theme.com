@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Bookmark, Building2, FileText, Image as ImageIcon, Sparkles } from 'lucide-react'
 import { NavbarShell } from '@/components/shared/navbar-shell'
 import { Footer } from '@/components/shared/footer'
+import { RegisterForm } from '@/components/auth/register-form'
 import { getFactoryState } from '@/design/factory/get-factory-state'
 import { getProductKind } from '@/design/factory/get-product-kind'
 import { REGISTER_PAGE_OVERRIDE_ENABLED, RegisterPageOverride } from '@/overrides/register-page'
@@ -21,14 +22,14 @@ function getRegisterConfig(kind: ReturnType<typeof getProductKind>) {
   }
   if (kind === 'editorial') {
     return {
-      shell: 'bg-[#fbf6ee] text-[#241711]',
-      panel: 'border border-[#dcc8b7] bg-[#fffdfa]',
-      side: 'border border-[#e6d6c8] bg-[#fff4e8]',
-      muted: 'text-[#6e5547]',
-      action: 'bg-[#241711] text-[#fff1e2] hover:bg-[#3a241b]',
+      shell: 'bg-[#f6f9f9] text-[#0f1a1a]',
+      panel: 'border border-[#c5d9d9]/80 bg-white shadow-sm',
+      side: 'border border-[#c5d9d9]/70 bg-[#eef5f5]',
+      muted: 'text-[#4a6566]',
+      action: 'bg-[#1A4D4E] text-white hover:bg-[#143d3e]',
       icon: FileText,
-      title: 'Start your contributor workspace',
-      body: 'Create a profile for essays, issue drafts, editorial review, and publication scheduling.',
+      title: 'Join the contributor roster',
+      body: 'Create an account to pitch routes, file drafts, and follow editor notes. Registration signs you in and saves locally.',
     }
   }
   if (kind === 'visual') {
@@ -83,13 +84,7 @@ export default function RegisterPage() {
 
           <div className={`rounded-[2rem] p-8 ${config.panel}`}>
             <p className="text-xs font-semibold uppercase tracking-[0.24em] opacity-70">Create account</p>
-            <form className="mt-6 grid gap-4">
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Full name" />
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Email address" />
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Password" type="password" />
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="What are you creating or publishing?" />
-              <button type="submit" className={`inline-flex h-12 items-center justify-center rounded-full px-6 text-sm font-semibold ${config.action}`}>Create account</button>
-            </form>
+            <RegisterForm actionClass={config.action} />
             <div className={`mt-6 flex items-center justify-between text-sm ${config.muted}`}>
               <span>Already have an account?</span>
               <Link href="/login" className="inline-flex items-center gap-2 font-semibold hover:underline">

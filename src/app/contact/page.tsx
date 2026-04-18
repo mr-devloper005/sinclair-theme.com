@@ -18,11 +18,11 @@ function getTone(kind: ReturnType<typeof getProductKind>) {
   }
   if (kind === 'editorial') {
     return {
-      shell: 'bg-[#fbf6ee] text-[#241711]',
-      panel: 'border border-[#dcc8b7] bg-[#fffdfa]',
-      soft: 'border border-[#e6d6c8] bg-[#fff4e8]',
-      muted: 'text-[#6e5547]',
-      action: 'bg-[#241711] text-[#fff1e2] hover:bg-[#3a241b]',
+      shell: 'bg-[linear-gradient(180deg,#f6f9f9_0%,#fbfdfe_45%,#ffffff_100%)] text-[#0f1a1a]',
+      panel: 'border border-[#c5d9d9]/80 bg-white shadow-[0_18px_50px_rgba(15,42,44,0.06)]',
+      soft: 'border border-[#c5d9d9]/70 bg-[#eef5f5]',
+      muted: 'text-[#4a6566]',
+      action: 'bg-[#1A4D4E] text-white hover:bg-[#143d3e]',
     }
   }
   if (kind === 'visual') {
@@ -60,9 +60,9 @@ export default function ContactPage() {
         ]
       : productKind === 'editorial'
         ? [
-            { icon: FileText, title: 'Editorial submissions', body: 'Pitch essays, columns, and long-form ideas that fit the publication.' },
-            { icon: Mail, title: 'Newsletter partnerships', body: 'Coordinate sponsorships, collaborations, and issue-level campaigns.' },
-            { icon: Sparkles, title: 'Contributor support', body: 'Get help with voice, formatting, and publication workflow questions.' },
+            { icon: FileText, title: 'Pitches & investigations', body: 'Route-level reporting, climate mobility, and human-centered adventure features—send a one-page outline plus timeline.' },
+            { icon: Mail, title: 'Partnerships & syndication', body: 'Ethical sponsor integrations, nonprofit collaborations, and reprint requests with transparent disclosure language.' },
+            { icon: Sparkles, title: 'Reader & member support', body: 'Account access, gift memberships, and accessibility feedback routed to the right producer within 48 hours.' },
           ]
         : productKind === 'visual'
           ? [
@@ -80,30 +80,44 @@ export default function ContactPage() {
     <div className={`min-h-screen ${tone.shell}`}>
       <NavbarShell />
       <main className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-        <section className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
+        <section className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] opacity-70">Contact {SITE_CONFIG.name}</p>
-            <h1 className="mt-4 text-5xl font-semibold tracking-[-0.05em]">A support page that matches the product, not a generic contact form.</h1>
-            <p className={`mt-5 max-w-2xl text-sm leading-8 ${tone.muted}`}>Tell us what you are trying to publish, fix, or launch. We will route it through the right lane instead of forcing every request into the same support bucket.</p>
-            <div className="mt-8 space-y-4">
+            <div className="flex items-start gap-3">
+              <span className="mt-1 h-10 w-1 shrink-0 rounded-full bg-[#1A4D4E]" aria-hidden />
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#5a7a7b]">Contact {SITE_CONFIG.name}</p>
+                <h1 className="mt-3 text-4xl font-semibold tracking-[-0.04em] text-[#0f1a1a] sm:text-5xl">Route your note to the right desk—fast.</h1>
+                <p className={`mt-5 max-w-2xl text-base leading-relaxed ${tone.muted}`}>
+                  Whether you are filing a correction, pitching a river corridor investigation, or coordinating a classroom partnership, tell us which lane fits. We read
+                  everything and respond with a human name, not a ticket hash.
+                </p>
+              </div>
+            </div>
+            <div className="mt-10 space-y-4">
               {lanes.map((lane) => (
-                <div key={lane.title} className={`rounded-[1.6rem] p-5 ${tone.soft}`}>
-                  <lane.icon className="h-5 w-5" />
-                  <h2 className="mt-3 text-xl font-semibold">{lane.title}</h2>
-                  <p className={`mt-2 text-sm leading-7 ${tone.muted}`}>{lane.body}</p>
+                <div key={lane.title} className={`rounded-2xl p-6 ${tone.soft}`}>
+                  <lane.icon className="h-5 w-5 text-[#1A4D4E]" />
+                  <h2 className="mt-3 text-lg font-semibold text-[#0f1a1a]">{lane.title}</h2>
+                  <p className={`mt-2 text-sm leading-relaxed ${tone.muted}`}>{lane.body}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className={`rounded-[2rem] p-7 ${tone.panel}`}>
-            <h2 className="text-2xl font-semibold">Send a message</h2>
+          <div className={`rounded-2xl p-8 ${tone.panel}`}>
+            <h2 className="text-xl font-semibold text-[#0f1a1a]">Send a message</h2>
+            <p className={`mt-2 text-sm ${tone.muted}`}>This form is monitored by real editors—no automated triage trees.</p>
             <form className="mt-6 grid gap-4">
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Your name" />
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Email address" />
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="What do you need help with?" />
-              <textarea className="min-h-[180px] rounded-2xl border border-current/10 bg-transparent px-4 py-3 text-sm" placeholder="Share the full context so we can respond with the right next step." />
-              <button type="submit" className={`inline-flex h-12 items-center justify-center rounded-full px-6 text-sm font-semibold ${tone.action}`}>Send message</button>
+              <input className="h-12 rounded-xl border border-[#c5d9d9]/80 bg-[#fbfdfe] px-4 text-sm text-[#0f1a1a]" placeholder="Your name" />
+              <input className="h-12 rounded-xl border border-[#c5d9d9]/80 bg-[#fbfdfe] px-4 text-sm text-[#0f1a1a]" placeholder="Email address" />
+              <input className="h-12 rounded-xl border border-[#c5d9d9]/80 bg-[#fbfdfe] px-4 text-sm text-[#0f1a1a]" placeholder="Topic (pitch, correction, partnership…)" />
+              <textarea
+                className="min-h-[180px] rounded-xl border border-[#c5d9d9]/80 bg-[#fbfdfe] px-4 py-3 text-sm text-[#0f1a1a]"
+                placeholder="Share context, deadlines, and links. If this is sensitive, say so—we can switch to encrypted email."
+              />
+              <button type="submit" className={`inline-flex h-12 items-center justify-center rounded-full px-6 text-sm font-semibold ${tone.action}`}>
+                Send message
+              </button>
             </form>
           </div>
         </section>
