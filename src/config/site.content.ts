@@ -2,75 +2,77 @@ import type { TaskKey } from '@/lib/site-config'
 
 export const siteContent = {
   navbar: {
-    tagline: 'Independent reading platform',
+    tagline: 'Adventure journalism & field notes',
+    /** Extra nav links (non–task routes). Intentionally empty—article category filters stay on listing pages, not the navbar. */
+    editorialNav: [] as const,
   },
   footer: {
-    tagline: 'Stories, resources, and discoverable posts',
+    tagline: 'Stories from the edge of the map',
   },
   hero: {
-    badge: 'Latest stories and visuals',
-    title: ['A thoughtful home for', 'stories, visuals, and discovery.'],
+    badge: 'Field-tested reporting',
+    title: ['Stories built for', 'slow reading and bold imagery.'],
     description:
-      'Explore fresh articles, image-led posts, and discoverable content across the platform through a calmer and clearer browsing experience.',
+      'Dispatch-style features, route intelligence, and human-centered adventure writing—presented with the pacing of a premium magazine.',
     primaryCta: {
-      label: 'Read latest stories',
+      label: 'Read today’s lead',
       href: '/articles',
     },
     secondaryCta: {
-      label: 'Explore visuals',
-      href: '/images',
+      label: 'Search the archive',
+      href: '/search',
     },
-    searchPlaceholder: 'Search stories, visuals, listings, and more',
+    searchPlaceholder: 'Search articles, authors, and topics',
     focusLabel: 'Focus',
-    featureCardBadge: 'latest cover rotation',
-    featureCardTitle: 'Latest posts shape the visual identity of the homepage.',
+    featureCardBadge: 'cover rotation',
+    featureCardTitle: 'The homepage follows the rhythm of a weekly magazine.',
     featureCardDescription:
-      'Recent images and stories stay at the center of the experience without changing any core platform behavior.',
+      'Lead art, featured row, latest list, and trending rail keep scanning fast without sacrificing editorial depth.',
   },
   home: {
     metadata: {
-      title: 'Stories, visuals, and discoverable content',
+      title: 'Adventure journalism, field reporting, and trail culture',
       description:
-        'Explore articles, images, listings, and curated posts through a cleaner reading-first experience.',
-      openGraphTitle: 'Stories, visuals, and discoverable content',
+        'Independent adventure magazine with long-form reporting, gear insight, and human stories from remote places.',
+      openGraphTitle: 'Adventure journalism and field reporting',
       openGraphDescription:
-        'Discover articles, visual posts, and connected content through a calmer reading-first experience.',
-      keywords: ['story platform', 'article site', 'visual content', 'content discovery'],
+        'Immersive stories, structured layouts, and premium article presentation for readers who live outdoors.',
+      keywords: ['adventure journalism', 'travel magazine', 'outdoor reporting', 'trail culture', 'field notes'],
     },
-    introBadge: 'About the platform',
-    introTitle: 'Built for reading, browsing, and connecting different kinds of content.',
+    introBadge: 'About the publication',
+    introTitle: 'Built for readers who want depth, not algorithmic noise.',
     introParagraphs: [
-      'This site brings together article-style reading, visual browsing, and structured discovery so visitors can move naturally between different content types.',
-      'Instead of separating stories, visuals, and supporting resources into disconnected surfaces, the platform keeps them connected in one place with consistent navigation and easier exploration.',
-      'Whether someone starts with a story, an image-led post, a listing, or a resource page, they can keep discovering related content without friction.',
+      'Every story is edited for clarity, safety context, and respect for the landscapes and communities we cover.',
+      'We combine narrative features with practical intelligence—routes, ethics, climate, and gear—without turning the site into a generic feed.',
+      'Whether you start with a dispatch, a gear lab review, or a trending trail note, the typography and pacing stay consistent.',
     ],
     sideBadge: 'At a glance',
     sidePoints: [
-      'Reading-first homepage with stronger emphasis on stories and imagery.',
-      'Connected sections for articles, visuals, listings, and supporting resources.',
-      'Cleaner browsing rhythm designed to make exploration feel easier.',
-      'Lightweight interactions that keep the experience fast and readable.',
+      'Magazine-style homepage with hero, featured row, latest list, and trending rail.',
+      'Deep teal palette tuned for long reading sessions indoors or on the trail.',
+      'Lightweight motion: subtle lifts and fades, no gimmicky scroll hijacking.',
+      'Search and category filters stay fast and keyboard friendly.',
     ],
     primaryLink: {
       label: 'Browse articles',
       href: '/articles',
     },
     secondaryLink: {
-      label: 'See visuals',
-      href: '/images',
+      label: 'Open search',
+      href: '/search',
     },
   },
   cta: {
-    badge: 'Start exploring',
-    title: 'Explore articles, visuals, and resources through one connected experience.',
+    badge: 'Write with us',
+    title: 'Bring a route, investigation, or expedition feature to our readers.',
     description:
-      'Move between articles, image-led posts, listings, and resources through one clearer and more connected visual system.',
+      'We review every pitch for editorial fit, safety, and environmental responsibility before assigning.',
     primaryCta: {
-      label: 'Get Started Free',
+      label: 'Create contributor account',
       href: '/register',
     },
     secondaryCta: {
-      label: 'Contact Sales',
+      label: 'Contact editors',
       href: '/contact',
     },
   },
@@ -80,8 +82,8 @@ export const siteContent = {
 
 export const taskPageMetadata: Record<Exclude<TaskKey, 'comment' | 'org' | 'social'>, { title: string; description: string }> = {
   article: {
-    title: 'Articles and stories',
-    description: 'Read articles, stories, guides, and long-form posts across topics and interests.',
+    title: 'Articles and dispatches',
+    description: 'Long-form adventure journalism, field notes, gear labs, and narrative features.',
   },
   listing: {
     title: 'Listings and discoverable pages',
@@ -122,21 +124,21 @@ export const taskIntroCopy: Record<
     ],
     links: [
       { label: 'Read articles', href: '/articles' },
-      { label: 'Explore classifieds', href: '/classifieds' },
-      { label: 'View profiles', href: '/profile' },
+      { label: 'Open search', href: '/search' },
+      { label: 'About', href: '/about' },
     ],
   },
   article: {
-    title: 'Articles, stories, and long-form reading',
+    title: 'Articles, dispatches, and long-form reading',
     paragraphs: [
-      'This section is built for stories, explainers, guides, and long-form reading across topics and interests.',
-      'Articles connect with listings, images, resources, and other content types so deeper reading can lead naturally into related discovery.',
-      'Use this section to browse thoughtful posts, revisit useful writing, and move into supporting content when you want more context.',
+      'This desk publishes field reporting, route intelligence, profiles, and gear investigations with a magazine-grade editing pass.',
+      'Use category filters to move between news, travel, lifestyle notes, and equipment coverage without losing the calm reading rhythm.',
+      'Every article is tuned for accessibility: strong contrast, generous line height, and predictable navigation patterns.',
     ],
     links: [
-      { label: 'Explore listings', href: '/listings' },
-      { label: 'Open images', href: '/images' },
-      { label: 'Browse resources', href: '/pdf' },
+      { label: 'Browse all articles', href: '/articles' },
+      { label: 'Search archive', href: '/search' },
+      { label: 'About the publication', href: '/about' },
     ],
   },
   classified: {
@@ -147,74 +149,74 @@ export const taskIntroCopy: Record<
       'Browse by category to find announcements quickly, then continue into related sections when you need more detail.',
     ],
     links: [
-      { label: 'Business listings', href: '/listings' },
       { label: 'Read articles', href: '/articles' },
-      { label: 'View profiles', href: '/profile' },
+      { label: 'Open search', href: '/search' },
+      { label: 'About', href: '/about' },
     ],
   },
   image: {
     title: 'Image-led posts and visual stories',
     paragraphs: [
       'Images take the lead in this section through galleries, visual posts, and story-led content where imagery carries the experience.',
-      'These posts connect with articles, listings, and other sections so visuals can act as entry points into deeper content.',
+      'These posts connect with articles and other sections so visuals can act as entry points into deeper content.',
       'Browse the latest visual updates, then continue into related stories or supporting pages for more context.',
     ],
     links: [
       { label: 'Read articles', href: '/articles' },
-      { label: 'Explore listings', href: '/listings' },
-      { label: 'Open classifieds', href: '/classifieds' },
+      { label: 'Open search', href: '/search' },
+      { label: 'About', href: '/about' },
     ],
   },
   profile: {
     title: 'Profiles, identities, and public pages',
     paragraphs: [
       'Profiles capture the identity behind a business, creator, brand, or project and help visitors understand who is behind the content they are exploring.',
-      'These pages work as trust anchors across the site and connect naturally with stories, listings, documents, and other post types.',
+      'These pages work as trust anchors across the site and connect naturally with stories and other post types.',
       'Browse profiles to understand people and brands more clearly, then continue into related content from the same source.',
     ],
     links: [
-      { label: 'Open listings', href: '/listings' },
       { label: 'Read articles', href: '/articles' },
-      { label: 'Browse images', href: '/images' },
+      { label: 'Open search', href: '/search' },
+      { label: 'About', href: '/about' },
     ],
   },
   sbm: {
     title: 'Curated links and bookmarked resources',
     paragraphs: [
       'This section collects useful links, references, tools, and saved resources in a text-first browsing format.',
-      'Bookmarks stay connected to the rest of the platform, making it easier to move from a saved link into related stories, listings, or resources.',
+      'Bookmarks stay connected to the rest of the platform, making it easier to move from a saved link into related stories.',
       'Use this section to organize helpful sources and discover connected content without leaving the broader site experience.',
     ],
     links: [
       { label: 'Browse articles', href: '/articles' },
-      { label: 'Explore listings', href: '/listings' },
-      { label: 'Open PDFs', href: '/pdf' },
+      { label: 'Open search', href: '/search' },
+      { label: 'About', href: '/about' },
     ],
   },
   pdf: {
     title: 'PDFs, documents, and downloadable files',
     paragraphs: [
       'The PDF library hosts reports, guides, downloadable files, and longer-form document resources that support reading and discovery.',
-      'These resources work alongside stories, listings, and profiles, helping document-style content stay connected to the rest of the platform.',
+      'These resources work alongside stories and profiles, helping document-style content stay connected to the rest of the platform.',
       'Browse by category to find relevant files quickly, then continue into related sections when you want more context.',
     ],
     links: [
       { label: 'Read articles', href: '/articles' },
-      { label: 'See listings', href: '/listings' },
-      { label: 'Explore profiles', href: '/profile' },
+      { label: 'Open search', href: '/search' },
+      { label: 'About', href: '/about' },
     ],
   },
   social: {
     title: 'Short updates and community signals',
     paragraphs: [
       'Short updates add quick signals that keep activity flowing across the platform.',
-      'They work well with stories, listings, and resources by helping visitors move from brief updates into deeper content.',
+      'They work well with stories and resources by helping visitors move from brief updates into deeper content.',
       'Use these posts as lightweight entry points into the broader site experience.',
     ],
     links: [
-      { label: 'Open listings', href: '/listings' },
       { label: 'Read articles', href: '/articles' },
-      { label: 'View PDFs', href: '/pdf' },
+      { label: 'Open search', href: '/search' },
+      { label: 'About', href: '/about' },
     ],
   },
   comment: {
@@ -226,21 +228,21 @@ export const taskIntroCopy: Record<
     ],
     links: [
       { label: 'Explore articles', href: '/articles' },
-      { label: 'View listings', href: '/listings' },
-      { label: 'See classifieds', href: '/classifieds' },
+      { label: 'Open search', href: '/search' },
+      { label: 'About', href: '/about' },
     ],
   },
   org: {
     title: 'Organizations, teams, and structured entities',
     paragraphs: [
       'Organization pages provide structured identity surfaces for teams, brands, communities, and agencies.',
-      'Used with listings, stories, profiles, and resources, they help create stronger structure across the platform.',
+      'Used with stories and resources, they help create stronger structure across the platform.',
       'Connect organization pages with related content to build a clearer and more unified site presence.',
     ],
     links: [
-      { label: 'Business listings', href: '/listings' },
       { label: 'Read articles', href: '/articles' },
-      { label: 'PDF library', href: '/pdf' },
+      { label: 'Open search', href: '/search' },
+      { label: 'About', href: '/about' },
     ],
   },
 }
