@@ -1,29 +1,54 @@
-﻿import { PageShell } from '@/components/shared/page-shell'
-import { Card, CardContent } from '@/components/ui/card'
+import { PageShell } from '@/components/shared/page-shell'
+import { AdventurePanel, AdventureSoftPanel } from '@/components/marketing/adventure-marketing'
 
-const sections = [
-  { title: 'Essential Cookies', body: 'Required for authentication and core features.' },
-  { title: 'Analytics Cookies', body: 'Help us understand how the platform is used.' },
-  { title: 'Preference Cookies', body: 'Remember your settings and saved filters.' },
+const cookies = [
+  {
+    title: 'Strictly necessary',
+    body: 'Authentication tokens, session security, and load balancing. These cannot be disabled if you want to stay signed in or complete purchases.',
+  },
+  {
+    title: 'Functional',
+    body: 'Remember font size preferences, saved reading positions, or newsletter frequency choices when you ask us to store them.',
+  },
+  {
+    title: 'Analytics',
+    body: 'Aggregated metrics about which sections are read, scroll depth, and referral sources. We use this information to prioritize investigations and design experiments—not to build individual marketing profiles.',
+  },
+  {
+    title: 'Embedded media',
+    body: 'Some stories include maps or video players hosted by partners. Those partners may set their own cookies governed by their policies.',
+  },
 ]
 
 export default function CookiesPage() {
   return (
     <PageShell
-      title="Cookie Policy"
-      description="Details about the cookies we use."
+      variant="adventure"
+      title="Cookie policy"
+      description="Transparent detail about the cookies and local storage keys we use to keep reading smooth, secure, and respectful of your attention."
     >
-      <Card className="border-border bg-card">
-        <CardContent className="p-6 space-y-4">
-          <p className="text-xs text-muted-foreground">Last updated: March 16, 2026</p>
-          {sections.map((section) => (
-            <div key={section.title} className="rounded-lg border border-border bg-secondary/40 p-4">
-              <h3 className="text-sm font-semibold text-foreground">{section.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">{section.body}</p>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
+      <AdventureSoftPanel>
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#5a7a7b]">Last updated · April 18, 2026</p>
+        <p className="mt-4 text-sm leading-relaxed text-[#4a6566]">
+          We aim for the smallest footprint possible. You can clear cookies at any time through your browser; doing so may sign you out or reset optional preferences.
+        </p>
+      </AdventureSoftPanel>
+
+      <div className="mt-10 space-y-5">
+        {cookies.map((c) => (
+          <AdventurePanel key={c.title}>
+            <h3 className="text-lg font-semibold text-[#0f1a1a]">{c.title}</h3>
+            <p className="mt-3 text-sm leading-relaxed text-[#4a6566]">{c.body}</p>
+          </AdventurePanel>
+        ))}
+      </div>
+
+      <AdventurePanel className="mt-10">
+        <h3 className="text-lg font-semibold text-[#0f1a1a]">Managing preferences</h3>
+        <p className="mt-3 text-sm leading-relaxed text-[#4a6566]">
+          When we display a consent banner, you can accept or reject non-essential categories. You can revisit choices by clearing cookies or contacting us for a manual reset. Some jurisdictions provide additional rights—see our Privacy Policy for more.
+        </p>
+      </AdventurePanel>
     </PageShell>
   )
 }

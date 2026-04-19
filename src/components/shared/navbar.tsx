@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
 import { Search, Menu, X, User, FileText, Building2, LayoutGrid, Tag, Image as ImageIcon, ChevronRight, Sparkles, MapPin, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useAuth } from '@/lib/auth-context'
@@ -41,12 +41,12 @@ const variantClasses = {
     mobile: 'border-t border-slate-200/70 bg-white/95',
   },
   'editorial-bar': {
-    shell: 'border-b border-[#d7c4b3] bg-[#fff7ee]/90 text-[#2f1d16] backdrop-blur-xl',
-    logo: 'rounded-full border border-[#dbc6b6] bg-white shadow-sm',
-    active: 'bg-[#2f1d16] text-[#fff4e4]',
-    idle: 'text-[#72594a] hover:bg-[#f2e5d4] hover:text-[#2f1d16]',
-    cta: 'rounded-full bg-[#2f1d16] text-[#fff4e4] hover:bg-[#452920]',
-    mobile: 'border-t border-[#dbc6b6] bg-[#fff7ee]',
+    shell: 'border-b border-[#c5d9d9]/80 bg-white/92 text-[#0f1a1a] backdrop-blur-xl',
+    logo: 'rounded-full border border-[#c5d9d9]/90 bg-white shadow-sm',
+    active: 'border-[#1A4D4E] text-[#0f1a1a]',
+    idle: 'border-transparent text-[#5a7a7b] hover:text-[#0f1a1a]',
+    cta: 'rounded-full bg-[#1A4D4E] text-white hover:bg-[#143d3e]',
+    mobile: 'border-t border-[#c5d9d9]/80 bg-[#f6f9f9]',
   },
   'floating-bar': {
     shell: 'border-b border-transparent bg-transparent text-white',
@@ -87,6 +87,27 @@ const directoryPalette = {
   },
 } as const
 
+function isEditorialNavActive(pathname: string, searchParams: URLSearchParams, href: string) {
+  if (!href.includes('?')) {
+    const path = href.split('#')[0] || ''
+    if (path === '/') return pathname === '/'
+    if (path === '/articles') {
+      return pathname.startsWith('/articles') && !searchParams.get('category')
+    }
+    return pathname === path || pathname.startsWith(`${path}/`)
+  }
+  try {
+    const url = new URL(href, 'https://placeholder.local')
+    if (!pathname.startsWith(url.pathname)) return false
+    for (const [key, val] of url.searchParams.entries()) {
+      if (searchParams.get(key) !== val) return false
+    }
+    return true
+  } catch {
+    return false
+  }
+}
+
 export function Navbar() {
   if (NAVBAR_OVERRIDE_ENABLED) {
     return <NavbarOverride />
@@ -94,15 +115,33 @@ export function Navbar() {
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const pathname = usePathname()
+  const searchParams = useSearchParams()
   const { isAuthenticated } = useAuth()
   const { recipe } = getFactoryState()
 
   const navigation = useMemo(() => SITE_CONFIG.tasks.filter((task) => task.enabled && task.key !== 'profile'), [])
   const primaryNavigation = navigation.slice(0, 5)
+  const editorialNavItems = useMemo(() => {
+    const fromContent = [...siteContent.navbar.editorialNav]
+    const fromTasks = primaryNavigation.map((task) => ({ label: task.label, href: task.route }))
+    const seen = new Set<string>()
+    const merged: { label: string; href: string }[] = []
+    for (const item of [...fromContent, ...fromTasks]) {
+      if (seen.has(item.href)) continue
+      seen.add(item.href)
+      merged.push(item)
+    }
+    return merged
+  }, [primaryNavigation])
   const mobileNavigation = navigation.map((task) => ({
     name: task.label,
     href: task.route,
     icon: taskIcons[task.key] || LayoutGrid,
+  }))
+  const editorialMobileNavigation = editorialNavItems.map((item) => ({
+    name: item.label,
+    href: item.href,
+    icon: FileText,
   }))
   const primaryTask = SITE_CONFIG.tasks.find((task) => task.key === recipe.primaryTask && task.enabled) || primaryNavigation[0]
   const isDirectoryProduct = recipe.homeLayout === 'listing-home' || recipe.homeLayout === 'classified-home'
@@ -114,13 +153,13 @@ export function Navbar() {
       <header className={cn('sticky top-0 z-50 w-full', palette.shell)}>
         <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
           <div className="flex min-w-0 items-center gap-4">
-            <Link href="/" className="flex shrink-0 items-center gap-3">
-              <div className={cn('flex h-12 w-12 items-center justify-center overflow-hidden p-1.5', palette.logo)}>
-                <img src="/favicon.png?v=20260401" alt={`${SITE_CONFIG.name} logo`} width="48" height="48" className="h-full w-full object-contain" />
+            <Link href="/" className="flex min-w-0 shrink-0 items-center gap-2.5 sm:gap-3" aria-label={`${SITE_CONFIG.name} home`}>
+              <div className={cn('flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden sm:h-12 sm:w-12', palette.logo)}>
+                <img src="/favicon.png?v=20260419" alt="" width={48} height={48} className="h-full w-full object-contain" />
               </div>
-              <div className="min-w-0 hidden sm:block">
-                <span className="block truncate text-xl font-semibold">{SITE_CONFIG.name}</span>
-                <span className="block text-[10px] uppercase tracking-[0.24em] opacity-60">{siteContent.navbar.tagline}</span>
+              <div className="min-w-0">
+                <span className="block truncate text-base font-semibold leading-tight sm:text-xl">{SITE_CONFIG.name}</span>
+                <span className="hidden truncate text-[10px] uppercase tracking-[0.24em] opacity-60 sm:block">{siteContent.navbar.tagline}</span>
               </div>
             </Link>
 
@@ -209,28 +248,33 @@ export function Navbar() {
     <header className={cn('sticky top-0 z-50 w-full', style.shell)}>
       <nav className={cn('mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8', isFloating ? 'h-24 pt-4' : 'h-20')}>
         <div className="flex min-w-0 flex-1 items-center gap-4 lg:gap-7">
-          <Link href="/" className="flex shrink-0 items-center gap-3 whitespace-nowrap pr-2">
-            <div className={cn('flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden p-1.5', style.logo)}>
-              <img src="/favicon.png?v=20260401" alt={`${SITE_CONFIG.name} logo`} width="48" height="48" className="h-full w-full object-contain" />
+          <Link href="/" className="flex min-w-0 max-w-[min(100%,240px)] shrink-0 items-center gap-2.5 whitespace-nowrap pr-2 sm:max-w-none sm:gap-3" aria-label={`${SITE_CONFIG.name} home`}>
+            <div className={cn('flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden sm:h-12 sm:w-12', style.logo)}>
+              <img src="/favicon.png?v=20260419" alt="" width={48} height={48} className="h-full w-full object-contain" />
             </div>
-            <div className="min-w-0 hidden sm:block">
-              <span className="block truncate text-xl font-semibold">{SITE_CONFIG.name}</span>
-              <span className="hidden text-[10px] uppercase tracking-[0.28em] opacity-70 sm:block">{siteContent.navbar.tagline}</span>
+            <div className="min-w-0 flex-1">
+              <span className="block truncate text-base font-semibold leading-tight sm:text-xl">{SITE_CONFIG.name}</span>
+              <span className="hidden truncate text-[10px] uppercase tracking-[0.28em] opacity-70 sm:block">{siteContent.navbar.tagline}</span>
             </div>
           </Link>
 
           {isEditorial ? (
-            <div className="hidden min-w-0 flex-1 items-center gap-4 xl:flex">
-              <div className="h-px flex-1 bg-[#d8c8bb]" />
-              {primaryNavigation.map((task) => {
-                const isActive = pathname.startsWith(task.route)
+            <div className="hidden min-w-0 flex-1 items-center justify-center gap-5 xl:flex">
+              {editorialNavItems.map((item) => {
+                const isLinkActive = isEditorialNavActive(pathname, searchParams, item.href)
                 return (
-                  <Link key={task.key} href={task.route} className={cn('text-sm font-semibold uppercase tracking-[0.18em] transition-colors', isActive ? 'text-[#2f1d16]' : 'text-[#7b6254] hover:text-[#2f1d16]')}>
-                    {task.label}
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={cn(
+                      'border-b-2 pb-1 text-sm font-semibold uppercase tracking-[0.14em] transition-colors',
+                      isLinkActive ? style.active : style.idle,
+                    )}
+                  >
+                    {item.label}
                   </Link>
                 )
               })}
-              <div className="h-px flex-1 bg-[#d8c8bb]" />
             </div>
           ) : isFloating ? (
             <div className="hidden min-w-0 flex-1 items-center gap-2 xl:flex">
@@ -291,9 +335,15 @@ export function Navbar() {
             <NavbarAuthControls />
           ) : (
             <div className="hidden items-center gap-2 md:flex">
-              <Button variant="ghost" size="sm" asChild className="rounded-full px-4">
-                <Link href="/login">Sign In</Link>
-              </Button>
+              {isEditorial ? (
+                <Button variant="outline" size="sm" asChild className="rounded-full border-[#1A4D4E]/35 bg-transparent px-4 text-[#0f1a1a] hover:bg-[#eef5f5]">
+                  <Link href="/login">Login</Link>
+                </Button>
+              ) : (
+                <Button variant="ghost" size="sm" asChild className="rounded-full px-4">
+                  <Link href="/login">Sign In</Link>
+                </Button>
+              )}
               <Button size="sm" asChild className={style.cta}>
                 <Link href="/register">{isEditorial ? 'Subscribe' : isUtility ? 'Post Now' : 'Get Started'}</Link>
               </Button>
@@ -323,8 +373,8 @@ export function Navbar() {
               <Search className="h-4 w-4" />
               Search the site
             </Link>
-            {mobileNavigation.map((item) => {
-              const isActive = pathname.startsWith(item.href)
+            {(isEditorial ? editorialMobileNavigation : mobileNavigation).map((item) => {
+              const isActive = isEditorial ? isEditorialNavActive(pathname, searchParams, item.href) : pathname.startsWith(item.href)
               return (
                 <Link key={item.name} href={item.href} onClick={() => setIsMobileMenuOpen(false)} className={cn('flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold transition-colors', isActive ? style.active : style.idle)}>
                   <item.icon className="h-5 w-5" />

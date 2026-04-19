@@ -54,14 +54,15 @@ export function TaskListClient({ task, initialPosts, category }: Props) {
 
   if (!merged.length) {
     return (
-      <div className="rounded-2xl border border-dashed border-border p-10 text-center text-muted-foreground">
-        No posts yet for this section.
+      <div className="rounded-2xl border border-dashed border-[#c5d9d9] bg-[#f6f9f9]/80 px-8 py-14 text-center">
+        <p className="text-sm font-medium text-[#0f1a1a]">Nothing published in this corridor yet.</p>
+        <p className="mt-2 text-sm text-[#5a7a7b]">Try another category or widen your search—the archive fills in as new stories ship.</p>
       </div>
     );
   }
 
   return (
-    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {merged.map((post) => {
         const localOnly = (post as any).localOnly;
         const href = localOnly

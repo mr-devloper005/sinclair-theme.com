@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { FileText, Building2, LayoutGrid, Tag, Github, Twitter, Linkedin, Image as ImageIcon, User, ArrowRight, Sparkles } from 'lucide-react'
+import { FileText, Building2, LayoutGrid, Tag, Github, Twitter, Linkedin, Image as ImageIcon, User, ArrowRight, Sparkles, Youtube } from 'lucide-react'
 import { SITE_CONFIG, type TaskKey } from '@/lib/site-config'
 import { siteContent } from '@/config/site.content'
 import { getFactoryState } from '@/design/factory/get-factory-state'
@@ -30,6 +30,7 @@ const footerLinks = {
     { name: 'Careers', href: '/careers' },
     { name: 'Blog', href: '/blog' },
     { name: 'Press', href: '/press' },
+    { name: 'Contact', href: '/contact' },
   ],
   resources: [
     { name: 'Help Center', href: '/help' },
@@ -49,6 +50,7 @@ const socialLinks = [
   { name: 'Twitter', href: 'https://twitter.com', icon: Twitter },
   { name: 'GitHub', href: 'https://github.com', icon: Github },
   { name: 'LinkedIn', href: 'https://linkedin.com', icon: Linkedin },
+  { name: 'YouTube', href: 'https://youtube.com', icon: Youtube },
 ]
 
 export function Footer() {
@@ -140,33 +142,81 @@ export function Footer() {
 
   if (recipe.footer === 'editorial-footer') {
     return (
-      <footer className="border-t border-[#dbc6b6] bg-[linear-gradient(180deg,#fff9f0_0%,#fff1df_100%)] text-[#2f1d16]">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-          <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr_0.9fr]">
+      <footer className="border-t border-white/10 bg-[linear-gradient(180deg,#0f1414_0%,#0a0e0e_100%)] text-slate-100">
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-[1.15fr_0.85fr_0.85fr_0.85fr]">
             <div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-[#dbc6b6] bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#72594a]">
-                <Sparkles className="h-3.5 w-3.5" />
-                Editorial desk
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-300">
+                <Sparkles className="h-3.5 w-3.5" aria-hidden />
+                {siteContent.footer.tagline}
               </div>
-              <h3 className="mt-5 text-3xl font-semibold tracking-[-0.04em]">{SITE_CONFIG.name}</h3>
-              <p className="mt-4 max-w-md text-sm leading-7 text-[#72594a]">{SITE_CONFIG.description}</p>
+              <h3 className="mt-5 text-3xl font-semibold tracking-[-0.04em] text-white">{SITE_CONFIG.name}</h3>
+              <p className="mt-4 max-w-md text-sm leading-7 text-slate-400">{SITE_CONFIG.description}</p>
+              {primaryTask ? (
+                <Link href={primaryTask.route} className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#1A4D4E] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#143d3e]">
+                  Read latest {primaryTask.label.toLowerCase()}
+                  <ArrowRight className="h-4 w-4" aria-hidden />
+                </Link>
+              ) : null}
             </div>
             <div>
-              <h4 className="text-xs font-semibold uppercase tracking-[0.24em] text-[#8b6d5a]">Sections</h4>
-              <ul className="mt-4 space-y-3 text-sm">
+              <h4 className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Browse</h4>
+              <ul className="mt-4 space-y-3 text-sm text-slate-300">
                 {footerLinks.platform.map((item: any) => (
-                  <li key={item.name}><Link href={item.href} className="hover:text-[#2f1d16]">{item.name}</Link></li>
+                  <li key={item.name}>
+                    <Link href={item.href} className="hover:text-white">
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+                <li>
+                  <Link href="/search" className="hover:text-white">
+                    Search archive
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Our sites</h4>
+              <ul className="mt-4 space-y-3 text-sm text-slate-300">
+                {footerLinks.company.map((item) => (
+                  <li key={item.name}>
+                    <Link href={item.href} className="hover:text-white">
+                      {item.name}
+                    </Link>
+                  </li>
                 ))}
               </ul>
             </div>
             <div>
-              <h4 className="text-xs font-semibold uppercase tracking-[0.24em] text-[#8b6d5a]">Company</h4>
-              <ul className="mt-4 space-y-3 text-sm">
-                {footerLinks.company.map((item) => (
-                  <li key={item.name}><Link href={item.href} className="hover:text-[#2f1d16]">{item.name}</Link></li>
+              <h4 className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Legal & policy</h4>
+              <ul className="mt-4 space-y-3 text-sm text-slate-300">
+                {footerLinks.legal.map((item) => (
+                  <li key={item.name}>
+                    <Link href={item.href} className="hover:text-white">
+                      {item.name}
+                    </Link>
+                  </li>
                 ))}
               </ul>
+              <div className="mt-8 flex flex-wrap gap-3">
+                {socialLinks.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-full border border-white/10 bg-white/5 p-2.5 text-slate-300 hover:bg-white/10 hover:text-white"
+                    aria-label={item.name}
+                  >
+                    <item.icon className="h-4 w-4" />
+                  </Link>
+                ))}
+              </div>
             </div>
+          </div>
+          <div className="mt-12 border-t border-white/10 pt-6 text-center text-sm text-slate-500">
+            &copy; {new Date().getFullYear()} {SITE_CONFIG.name}. All rights reserved.
           </div>
         </div>
       </footer>
