@@ -1,4 +1,4 @@
-import { TaskDetailPage } from "@/components/tasks/task-detail-page";
+import { ArticleDetailPage as CustomArticleDetailPage } from "@/components/tasks/article-detail-page";
 import { buildPostMetadata, buildTaskMetadata } from "@/lib/seo";
 import { fetchTaskPostBySlug, fetchTaskPosts } from "@/lib/task-data";
 
@@ -18,7 +18,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return post ? await buildPostMetadata("article", post) : await buildTaskMetadata("article");
 }
 
-export default async function ArticleDetailPage({ params }: { params: Promise<{ slug: string }> }) {
-  const resolvedParams = await params;
-  return <TaskDetailPage task="article" slug={resolvedParams.slug} />;
+export default function ArticleDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  return <CustomArticleDetailPage />;
 }
