@@ -2,12 +2,12 @@ import type { TaskKey } from '@/lib/site-config'
 
 export const siteContent = {
   navbar: {
-    tagline: 'Adventure journalism & field notes',
+    tagline: '',
     /** Extra nav links (non–task routes). Intentionally empty—article category filters stay on listing pages, not the navbar. */
     editorialNav: [] as const,
   },
   footer: {
-    tagline: 'Stories from the edge of the map',
+    tagline: '',
   },
   hero: {
     badge: 'Field-tested reporting',

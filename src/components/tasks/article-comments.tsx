@@ -246,18 +246,18 @@ export function ArticleComments({ slug }: { slug: string }) {
   return (
     <section className="mt-16 relative" id="comments">
       {/* Decorative Background Elements */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 rounded-3xl opacity-60"></div>
-      <div className="absolute top-4 right-4 w-32 h-32 bg-gradient-to-br from-purple-200 to-pink-200 rounded-full blur-3xl opacity-30"></div>
-      <div className="absolute bottom-4 left-4 w-24 h-24 bg-gradient-to-br from-blue-200 to-purple-200 rounded-full blur-2xl opacity-40"></div>
+      <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#f3eff8] via-[#efeaf6] to-[#e9e6f1] opacity-80"></div>
+      <div className="absolute top-4 right-4 h-32 w-32 rounded-full bg-gradient-to-br from-[#d9d2e6] to-[#cec5df] opacity-25 blur-3xl"></div>
+      <div className="absolute bottom-4 left-4 h-24 w-24 rounded-full bg-gradient-to-br from-[#dad5e8] to-[#cbc2dc] opacity-30 blur-2xl"></div>
       
       <div className="relative z-10">
         {/* Section Header */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-3 px-6 py-3 bg-white/80 backdrop-blur-md rounded-full border border-white/20 shadow-lg mb-4">
-            <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+          <div className="mb-4 inline-flex items-center gap-3 rounded-full border border-[#ddd5e8] bg-[#f5f1fa]/90 px-6 py-3 shadow-lg backdrop-blur-md">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-pink-500">
               <MessageSquare className="h-4 w-4 text-white" />
             </div>
-            <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">
+            <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text font-bold text-transparent">
               Discussion ({mergedComments.length})
             </span>
           </div>
@@ -267,11 +267,11 @@ export function ArticleComments({ slug }: { slug: string }) {
         {/* Comment Form */}
         <div className="mb-12">
           <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-blue-500/20 rounded-3xl blur-xl"></div>
-            <form onSubmit={handleSubmit} className="relative bg-white/90 backdrop-blur-md rounded-3xl border border-white/20 shadow-2xl p-8">
+            <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-[#c8bddc]/25 via-[#cbbfe0]/25 to-[#bfb2d5]/25 blur-xl"></div>
+            <form onSubmit={handleSubmit} className="relative rounded-3xl border border-[#d8d0e4] bg-[#f0edf5]/95 p-8 shadow-2xl backdrop-blur-md">
               <div className="space-y-6">
-                <div className="flex items-center gap-4 pb-4 border-b border-slate-200">
-                  <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full flex items-center justify-center">
+                <div className="flex items-center gap-4 border-b border-[#d2c9de] pb-4">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-purple-400 to-pink-400">
                     <span className="text-white font-bold text-lg">
                       {getLocalAuthorName().charAt(0).toUpperCase()}
                     </span>
@@ -291,7 +291,7 @@ export function ArticleComments({ slug }: { slug: string }) {
                     value={commentBody}
                     onChange={(event) => setCommentBody(event.target.value)}
                     placeholder="What's on your mind? Share your perspective..."
-                    className="min-h-32 border-slate-200 focus:border-purple-400 focus:ring-purple-400/20 rounded-2xl resize-none text-slate-700 placeholder-slate-400"
+                    className="min-h-32 resize-none rounded-2xl border-[#d7cede] bg-[#f7f4fb] text-slate-700 placeholder-slate-400 focus:border-purple-400 focus:ring-purple-400/20"
                     maxLength={2000}
                     disabled={limitReached}
                   />
