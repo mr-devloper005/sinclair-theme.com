@@ -26,10 +26,8 @@ const footerLinks = {
   })),
   company: [
     { name: 'About', href: '/about' },
-    { name: 'Team', href: '/team' },
     { name: 'Careers', href: '/careers' },
-    { name: 'Blog', href: '/blog' },
-    { name: 'Press', href: '/press' },
+
     { name: 'Contact', href: '/contact' },
   ],
   resources: [
@@ -46,12 +44,6 @@ const footerLinks = {
   ],
 }
 
-const socialLinks = [
-  { name: 'Twitter', href: 'https://twitter.com', icon: Twitter },
-  { name: 'GitHub', href: 'https://github.com', icon: Github },
-  { name: 'LinkedIn', href: 'https://linkedin.com', icon: Linkedin },
-  { name: 'YouTube', href: 'https://youtube.com', icon: Youtube },
-]
 
 export function Footer() {
   if (FOOTER_OVERRIDE_ENABLED) {
@@ -125,11 +117,7 @@ export function Footer() {
               <div>
                 <h3 className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">Connect</h3>
                 <div className="mt-4 flex gap-3">
-                  {socialLinks.map((item) => (
-                    <Link key={item.name} href={item.href} target="_blank" rel="noopener noreferrer" className="rounded-full border border-white/10 bg-white/8 p-2.5 text-slate-200 hover:bg-white/12 hover:text-white">
-                      <item.icon className="h-4 w-4" />
-                    </Link>
-                  ))}
+                 
                 </div>
               </div>
             </div>
@@ -146,10 +134,7 @@ export function Footer() {
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-[1.15fr_0.85fr_0.85fr_0.85fr]">
             <div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-300">
-                <Sparkles className="h-3.5 w-3.5" aria-hidden />
-                {siteContent.footer.tagline}
-              </div>
+              
               <h3 className="mt-5 text-3xl font-semibold tracking-[-0.04em] text-white">{SITE_CONFIG.name}</h3>
               <p className="mt-4 max-w-md text-sm leading-7 text-slate-400">{SITE_CONFIG.description}</p>
               {primaryTask ? (
@@ -200,18 +185,7 @@ export function Footer() {
                 ))}
               </ul>
               <div className="mt-8 flex flex-wrap gap-3">
-                {socialLinks.map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="rounded-full border border-white/10 bg-white/5 p-2.5 text-slate-300 hover:bg-white/10 hover:text-white"
-                    aria-label={item.name}
-                  >
-                    <item.icon className="h-4 w-4" />
-                  </Link>
-                ))}
+              
               </div>
             </div>
           </div>
