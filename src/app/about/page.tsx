@@ -40,7 +40,7 @@ export default function AboutPage() {
       actions={
         <>
           <Button variant="outline" className="rounded-full border-[#1A4D4E]/35 bg-white" asChild>
-            <Link href="/team">Meet the desk</Link>
+           
           </Button>
           <Button className="rounded-full bg-[#1A4D4E] text-white hover:bg-[#143d3e]" asChild>
             <Link href="/contact">Talk to editors</Link>
@@ -84,27 +84,7 @@ export default function AboutPage() {
         </div>
       </div>
 
-      <div className="mt-16">
-        <AdventureSectionTitle kicker="Masthead" title="Editors & producers shaping each issue" />
-        <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {mockTeamMembers.map((member) => (
-            <AdventurePanel key={member.id} className="transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_55px_rgba(15,42,44,0.1)]">
-              <div className="flex items-start gap-4">
-                <Avatar className="h-14 w-14 border border-[#c5d9d9]/80">
-                  <AvatarImage src={member.avatar} alt={member.name} />
-                  <AvatarFallback className="bg-[#1A4D4E] text-white">{member.name.charAt(0)}</AvatarFallback>
-                </Avatar>
-                <div>
-                  <p className="font-semibold text-[#0f1a1a]">{member.name}</p>
-                  <p className="text-xs font-semibold uppercase tracking-wide text-[#1A4D4E]">{member.role}</p>
-                  <p className="mt-3 text-sm leading-relaxed text-[#4a6566]">{member.bio}</p>
-                  <p className="mt-2 text-xs text-[#5a7a7b]">{member.location}</p>
-                </div>
-              </div>
-            </AdventurePanel>
-          ))}
-        </div>
-      </div>
+     
 
       <AdventureSoftPanel className="mt-16 text-center">
         <p className="text-sm font-semibold uppercase tracking-[0.22em] text-[#5a7a7b]">Work with us</p>
